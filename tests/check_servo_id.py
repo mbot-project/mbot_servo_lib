@@ -1,11 +1,11 @@
 """
-Used to check the XL320 servo ID.
+Used to check the servo ID.
 Loop thru all possible IDs and ping each one.
 Run this script with sudo.
 """
 
 from dynamixel_sdk import *
-from mbot_xl320_library import *
+from mbot_servo_library import *
 
 def main():
     initialize_GPIO()

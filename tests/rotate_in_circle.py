@@ -2,21 +2,21 @@
 """
 Servo movement example in "wheel" mode
 
-This script demonstrates the use of the mbot_xl320_library to control servo motors
+This script demonstrates the use of the mbot_servo_library to control servo motors
 operating in wheel mode. The servo rotates continuously with a user-defined speed until 
 a stop command is issued.
 
 Use: sudo python3 rotate_in_circle.py
 """
 
-from mbot_xl320_library import *
+from mbot_servo_library import *
 
 CONNECTION_DEVICE = "UART"  
 PORT_NAME = "/dev/ttyAMA0" 
 
 # defines the servo's ID
-servo1_ID = 1
-servo2_ID = 5
+servo1_ID = 2
+servo2_ID = 3
 
 def main():
     initialize_GPIO()

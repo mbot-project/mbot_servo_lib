@@ -1,21 +1,21 @@
 """
 Servo movement example in "joint" mode
 
-This script demonstrates the use of the mbot_xl320_library to control servo motors.
+This script demonstrates the use of the mbot_servo_library to control servo motors.
 The servo is set to operate in "joint" mode, where it alternates between two goal positions we set.
 
 Use: sudo python3 rotate_full_range.py
 """
 
-from mbot_xl320_library import *
+from mbot_servo_library import *
 
 
 CONNECTION_DEVICE = "UART"  
 PORT_NAME = "/dev/ttyAMA0" 
 
 # define the servo's ID
-servo1_ID = 1
-servo2_ID = 5
+servo1_ID = 2
+servo2_ID = 3
 
 # define Dynamixel moving tolerance
 # Don't set it too small such as 1, the servo might never reach the goal.

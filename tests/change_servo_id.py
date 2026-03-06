@@ -1,11 +1,11 @@
 """
-Used to change the XL320 servo ID.
+Used to change the servo ID.
 Duplicate ID will cause communication issues.
 Run this script with sudo.
 """
 
 from dynamixel_sdk import *
-from mbot_xl320_library import *
+from mbot_servo_library import *
 
 CURRENT_ID = 1  # The ID you want to change
 NEW_ID = 3      # The new ID you want to set

@@ -16,9 +16,9 @@ echo "Installing Dynamixel SDK..."
 cd "$WORKSPACE_PATH/lib/DynamixelSDK/python"
 sudo pip3 install --break-system-packages . || { echo 'Installing Dynamixel SDK failed.'; exit 1; }
 
-# Install mbot_xl320_library
-echo "Installing mbot_xl320_library..."
+# Install mbot_servo_library
+echo "Installing mbot_servo_library..."
 cd "$WORKSPACE_PATH"
-sudo pip3 install --break-system-packages . || { echo 'Installing mbot_xl320_library failed.'; exit 1; }
+sudo pip3 install --break-system-packages . || { echo 'Installing mbot_servo_library failed.'; exit 1; }
 
 echo "Installation completed successfully."

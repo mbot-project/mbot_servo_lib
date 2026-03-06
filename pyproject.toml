@@ -3,9 +3,9 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "mbot_xl320_library"                 # the package name that users install/import
+name = "mbot_servo_library"                 # the package name that users install/import
 version = "1.0.0"
-description = "Control library for XL320 servos"
+description = "Control library for Dynamixel servos (XL320, XL330, and more)"
 readme = "README.md"
 requires-python = ">=3.9"
 license = { text = "MIT" }
@@ -19,4 +19,4 @@ package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
-include = ["mbot_xl320_library*"]
+include = ["mbot_servo_library*"]
