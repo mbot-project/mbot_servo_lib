@@ -15,7 +15,9 @@ class GPIOPacketHandler(Protocol2PacketHandler):
 
         # tx packet
         result = self.txPacket(port, txpacket)
-        time.sleep(0.0001)
+        tx_time = len(txpacket) * 10.0 / port.getBaudRate()
+        time.sleep(tx_time + 0.0001)  # +0.1ms margin for UART FIFO jitter
+        
         if result != COMM_SUCCESS:
             return rxpacket, result, error
 
