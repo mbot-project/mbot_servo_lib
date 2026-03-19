@@ -13,6 +13,7 @@ ADDR_HARDWARE_ERROR_STATUS  = 70
 ADDR_GOAL_VELOCITY          = 104   # 4 bytes, signed; used in velocity (wheel) mode
 ADDR_PROFILE_VELOCITY       = 112   # 4 bytes; max speed used in position (joint) mode
 ADDR_GOAL_POSITION          = 116   # 4 bytes
+ADDR_MOVING                 = 122
 ADDR_PRESENT_POSITION       = 132   # 4 bytes
 
 DXL_MINIMUM_POSITION_VALUE  = 0     # Refer to the Minimum Position Limit of product eManual
@@ -109,6 +110,17 @@ class Servo:
             self.portHandler, self.servo_id, ADDR_PRESENT_POSITION)
         self._check(result, error)
         return pos
+
+    def is_moving(self):
+        """
+        @brief Check if the servo is currently moving.
+
+        @return True if moving, False if goal position reached.
+        """
+        val, result, error = self.packetHandler.read1ByteTxRx(
+            self.portHandler, self.servo_id, ADDR_MOVING)
+        self._check(result, error)
+        return bool(val)
 
     def set_position(self, goal_position):
         """

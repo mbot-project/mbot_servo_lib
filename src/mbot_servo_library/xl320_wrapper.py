@@ -109,8 +109,11 @@ class Servo:
         """
         pos, result, error = self.packetHandler.read2ByteTxRx(
             self.portHandler, self.servo_id, ADDR_PRESENT_POSITION)
-        self._check(result, error)
-        return pos
+        if self._check(result, error):
+            return pos
+        else:
+            print(f"[ID:{self.servo_id}] Cannot get position.")
+            return None
 
     def is_moving(self):
         """
@@ -133,6 +136,8 @@ class Servo:
             self.portHandler, self.servo_id, ADDR_GOAL_POSITION, goal_position)
         if self._check(result, error):
             print(f"[ID:{self.servo_id}] Goal position set to {goal_position}")
+        else:
+            print(f"[ID:{self.servo_id}] Cannot set position.")
 
     # ── Speed (joint mode) ───────────────────────────────────────────────────
 

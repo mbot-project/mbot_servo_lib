@@ -53,7 +53,7 @@ def main():
     servo.enable_torque()
 
     servo.set_joint_speed(200)  # range(0,1023)
-    goal_positions = [0,1000]   # range(0,1023)
+    goal_positions = [40,1000]   # range(0,1023)
 
     for goal_position in goal_positions:
         print("Press any key to continue! (or press ESC to quit!)")
@@ -62,13 +62,14 @@ def main():
             quit()
         servo.set_position(goal_position)
         while 1:
+            time.sleep(0.5)
             servo_current_position = servo.get_position()
-            print("[ID:%d] GoalPos:%d  CurrentPos:%d" % (servo_ID, goal_position, servo_current_position))
-
-            if abs(goal_position - servo_current_position) <= 10:
+            if servo_current_position:
+                print("[ID:%d] GoalPos:%d  CurrentPos:%d" % (servo_ID, goal_position, servo_current_position))
+                if abs(goal_position - servo_current_position) <= 10:
+                    break
+            else:
                 break
-
-        # portHandler.clearPort() 
 
     portHandler.closePort()
     close_GPIO()

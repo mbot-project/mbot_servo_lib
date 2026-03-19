@@ -56,10 +56,9 @@ def main():
 
     print("Press any key to continue! (or press ESC to quit!)")
     if getch() == chr(0x1B):
-        close_port(portHandler)
         quit()
 
-    servo.set_wheel_cw_speed(50)  # value is in percentage
+    servo.set_wheel_cw_speed(20)  # value is in percentage
 
     try:
         print("Press ESC to stop the servo.")
