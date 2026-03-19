@@ -1,19 +1,20 @@
 """
 Used to check the servo ID.
 Loop thru all possible IDs and ping each one.
-Run this script with sudo.
 """
 
 from dynamixel_sdk import *
-from mbot_servo_library import *
+from mbot_servo_library import initialize_GPIO, close_GPIO, GPIOPacketHandler
+# from mbot_servo_library.xseries_wrapper import BAUDRATE
+from mbot_servo_library.xl320_wrapper import BAUDRATE
 
 def main():
     initialize_GPIO()
-    portHandler, packetHandler = initialize_gpio_handlers("/dev/ttyAMA0")
+    portHandler = PortHandler("/dev/ttyAMA0")
+    packetHandler = GPIOPacketHandler()
 
-    open_port(portHandler)
-    # set_baudrate(portHandler, 57600)
-    set_baudrate(portHandler, 1000000)
+    portHandler.openPort()
+    portHandler.setBaudRate(BAUDRATE)
 
     # Scan for servos in ID range 0-252
     connected_servos = []

@@ -40,7 +40,22 @@ This is compatible with Pi5 and only tested on Pi5.
     - After installing the library, any script, anywhere, can do `from mbot_servo_library import *`
 
 You are all set.
+
 ## How to use
+
+Look at definitions in the tests under `lib/DynamixelSDK/python/tests/protocol2_0`, you will see code shown below. Currenly we provide separate wrappers for XL320 and X_SERIES, because they have completely different control table, and seems XL320 is isolated from rest of the family.
+
+```python
+#********* DYNAMIXEL Model definition *********
+#***** (Use only one definition at a time) *****
+MY_DXL = 'X_SERIES'       # X330 (5.0 V recommended), X430, X540, 2X430
+# MY_DXL = 'MX_SERIES'    # MX series with 2.0 firmware update.
+# MY_DXL = 'PRO_SERIES'   # H54, H42, M54, M42, L54, L42
+# MY_DXL = 'PRO_A_SERIES' # PRO series with (A) firmware update.
+# MY_DXL = 'P_SERIES'     # PH54, PH42, PM54
+# MY_DXL = 'XL320'        # [WARNING] Operating Voltage : 7.4V
+```
+
 1. Check the servo ID. This program will ping all the possible IDs and give you the list of connected IDs. Connect one servo to Pi at a time for ID checking.
     ```bash
     cd ~/mbot_servo_lib/tests
