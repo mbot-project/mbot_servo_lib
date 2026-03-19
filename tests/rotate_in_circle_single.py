@@ -11,10 +11,11 @@ Use: python3 rotate_in_circle.py
 
 import time, os
 from mbot_servo_library import initialize_GPIO, close_GPIO, GPIOPacketHandler
-from mbot_servo_library.xl320_wrapper import *
+# from mbot_servo_library.xl320_wrapper import *
+from mbot_servo_library.xseries_wrapper import *
 
 # define the servo's ID
-servo_ID = 4
+servo_ID = 1
 
 def getch():
     """

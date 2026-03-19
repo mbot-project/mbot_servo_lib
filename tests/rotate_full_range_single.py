@@ -9,10 +9,11 @@ Use: python3 rotate_full_range_single.py
 
 import time, os
 from mbot_servo_library import initialize_GPIO, close_GPIO, GPIOPacketHandler
-from mbot_servo_library.xl320_wrapper import *
+# from mbot_servo_library.xl320_wrapper import *
+from mbot_servo_library.xseries_wrapper import *
 
 # define the servo's ID
-servo_ID = 4
+servo_ID = 1
 
 def getch():
     """
@@ -62,7 +63,7 @@ def main():
             quit()
         servo.set_position(goal_position)
         while 1:
-            time.sleep(0.5)
+            time.sleep(0.1)
             servo_current_position = servo.get_position()
             if servo_current_position:
                 print("[ID:%d] GoalPos:%d  CurrentPos:%d" % (servo_ID, goal_position, servo_current_position))
