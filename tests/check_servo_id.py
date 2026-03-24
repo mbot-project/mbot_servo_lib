@@ -5,8 +5,8 @@ Loop thru all possible IDs and ping each one.
 
 from dynamixel_sdk import *
 from mbot_servo_library import initialize_GPIO, close_GPIO, GPIOPacketHandler
-# from mbot_servo_library.xseries_wrapper import BAUDRATE
-from mbot_servo_library.xl320_wrapper import BAUDRATE
+from mbot_servo_library.xseries_wrapper import BAUDRATE
+# from mbot_servo_library.xl320_wrapper import BAUDRATE
 
 def main():
     initialize_GPIO()

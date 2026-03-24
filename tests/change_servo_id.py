@@ -9,7 +9,7 @@ from mbot_servo_library import initialize_GPIO, close_GPIO, GPIOPacketHandler
 from mbot_servo_library.xseries_wrapper import BAUDRATE, Servo
 # from mbot_servo_library.xl320_wrapper import BAUDRATE, Servo
 
-CURRENT_ID = 3  # The ID you want to change
+CURRENT_ID = 1  # The ID you want to change
 NEW_ID = 2      # The new ID you want to set
 
 def main():
@@ -21,6 +21,7 @@ def main():
     portHandler.setBaudRate(BAUDRATE)
 
     servo = Servo(CURRENT_ID, portHandler, packetHandler)
+    servo.disable_torque()
 
     print(f"Writing new ID {NEW_ID}...")
     servo.change_id(NEW_ID)

@@ -67,7 +67,7 @@ def main():
             servo_current_position = servo.get_position()
             if servo_current_position:
                 print("[ID:%d] GoalPos:%d  CurrentPos:%d" % (servo_ID, goal_position, servo_current_position))
-                if abs(goal_position - servo_current_position) <= 10:
+                if abs(goal_position - servo_current_position) <= 20:
                     break
             else:
                 break

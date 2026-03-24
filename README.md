@@ -1,11 +1,8 @@
 # MBOT Servo Library
 
-This is a Python library for Dynamixel servos (XL320, XL330, and more) using DynamixelSDK.
+This is a Python library for Dynamixel servos using DynamixelSDK.
 
-This is for Botlab in ROB 550 use on ROS MBot, and is different from the Jetson Nano and armlab servo libraries.
-
-This is compatible with Pi5 and only tested on Pi5.
-
+This is compatible with Pi5 and only tested on Pi5. Curerntly tested with XL320, XL330-M288, XL430-W250.
 
 ## Install
 1. Edit the Configuration File.
@@ -43,36 +40,26 @@ You are all set.
 
 ## How to use
 
-Look at definitions in the tests under `lib/DynamixelSDK/python/tests/protocol2_0`, you will see code shown below. Currenly we provide separate wrappers for XL320 and X_SERIES, because they have completely different control table, and seems XL320 is isolated from rest of the family.
-
-```python
-#********* DYNAMIXEL Model definition *********
-#***** (Use only one definition at a time) *****
-MY_DXL = 'X_SERIES'       # X330 (5.0 V recommended), X430, X540, 2X430
-# MY_DXL = 'MX_SERIES'    # MX series with 2.0 firmware update.
-# MY_DXL = 'PRO_SERIES'   # H54, H42, M54, M42, L54, L42
-# MY_DXL = 'PRO_A_SERIES' # PRO series with (A) firmware update.
-# MY_DXL = 'P_SERIES'     # PH54, PH42, PM54
-# MY_DXL = 'XL320'        # [WARNING] Operating Voltage : 7.4V
+```bash
+from mbot_servo_library.xseries_wrapper import BAUDRATE, Servo
+# from mbot_servo_library.xl320_wrapper import BAUDRATE, Servo
 ```
+- If you are using XL320, which is very unstable, you need to switch from xseries_wrapper to xl320_wrapper, they have different control table.
+- If you are using XL330-M288 or XL430-W250, proceed.
+
 
 1. Check the servo ID. This program will ping all the possible IDs and give you the list of connected IDs. Connect one servo to Pi at a time for ID checking.
     ```bash
     cd ~/mbot_servo_lib/tests
-    sudo python3 check_servo_id.py
+    python3 check_servo_id.py
     ```
-2. Avoid using an identical ID for multiple servos. You may face communication failure or may not be able to detect a servo with an identical ID - [Source](https://emanual.robotis.com/docs/en/dxl/x/xl320/#id). Modify `change_servo_id.py` to change the ID.
+2. Modify `change_servo_id.py` to change the ID if you use more than 1 servo, we need to avoid using identical ID for multiple servos. You may face communication failure or may not be able to detect a servo with an identical ID - [Source](https://emanual.robotis.com/docs/en/dxl/x/xl320/#id). 
     ```bash
-    sudo python3 change_servo_id.py
+    python3 change_servo_id.py
     ```
-3. We have 2 examples `tests/rotate_full_range.py` and `tests/rotate_in_circle.py`. You need to define the servo ID to use the 2 examples, and the IDs are the ones you obtain from step 1.
-    ```python3
-    # defines the servo's ID
-    servo1_ID = 1
-    servo2_ID = 2
-    ```
+3. We have 2 examples `tests/rotate_full_range_single.py` and `tests/rotate_in_circle_single.py`. You need to define the servo ID to use the 2 examples, and the IDs are the ones you obtain from step 1.
     ```bash
-    sudo python3 rotate_in_circle.py
+    python3 rotate_in_circle_single.py
     ```
 ## Uninstall
 ```bash
