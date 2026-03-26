@@ -1,5 +1,4 @@
-from . import utils
-from . import config
+from . import gpio
 from dynamixel_sdk import *
 
 class GPIOPacketHandler(Protocol2PacketHandler):
@@ -11,11 +10,13 @@ class GPIOPacketHandler(Protocol2PacketHandler):
         error = 0
 
         # Set GPIO pin to LOW
-        utils.set_pin_low()
+        gpio.set_pin_low()
 
         # tx packet
         result = self.txPacket(port, txpacket)
-        time.sleep(0.0001)
+        tx_time = len(txpacket) * 10.0 / port.getBaudRate()
+        time.sleep(tx_time + 0.0001)  # +0.1ms margin for UART FIFO jitter
+        
         if result != COMM_SUCCESS:
             return rxpacket, result, error
 
@@ -37,7 +38,7 @@ class GPIOPacketHandler(Protocol2PacketHandler):
             # HEADER0 HEADER1 HEADER2 RESERVED ID LENGTH_L LENGTH_H INST ERROR CRC16_L CRC16_H
 
         # Set GPIO pin to HIGH
-        utils.set_pin_high()
+        gpio.set_pin_high()
         # rx packet
         while True:
             rxpacket, result = self.rxPacket(port, False)

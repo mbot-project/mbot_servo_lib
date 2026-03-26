@@ -1,11 +1,8 @@
 # MBOT Servo Library
 
-This is a Python library for Dynamixel servos (XL320, XL330, and more) using DynamixelSDK.
+This is a Python library for Dynamixel servos using DynamixelSDK.
 
-This is for Botlab in ROB 550 use on ROS MBot, and is different from the Jetson Nano and armlab servo libraries.
-
-This is compatible with Pi5 and only tested on Pi5.
-
+This is compatible with Pi5 and only tested on Pi5. Curerntly tested with XL320, XL330-M288, XL430-W250.
 
 ## Install
 1. Edit the Configuration File.
@@ -40,24 +37,29 @@ This is compatible with Pi5 and only tested on Pi5.
     - After installing the library, any script, anywhere, can do `from mbot_servo_library import *`
 
 You are all set.
+
 ## How to use
+
+```bash
+from mbot_servo_library.xseries_wrapper import BAUDRATE, Servo
+# from mbot_servo_library.xl320_wrapper import BAUDRATE, Servo
+```
+- If you are using XL320, which is very unstable, you need to switch from xseries_wrapper to xl320_wrapper, they have different control table.
+- If you are using XL330-M288 or XL430-W250, proceed.
+
+
 1. Check the servo ID. This program will ping all the possible IDs and give you the list of connected IDs. Connect one servo to Pi at a time for ID checking.
     ```bash
     cd ~/mbot_servo_lib/tests
-    sudo python3 check_servo_id.py
+    python3 check_servo_id.py
     ```
-2. Avoid using an identical ID for multiple servos. You may face communication failure or may not be able to detect a servo with an identical ID - [Source](https://emanual.robotis.com/docs/en/dxl/x/xl320/#id). Modify `change_servo_id.py` to change the ID.
+2. Modify `change_servo_id.py` to change the ID if you use more than 1 servo, we need to avoid using identical ID for multiple servos. You may face communication failure or may not be able to detect a servo with an identical ID - [Source](https://emanual.robotis.com/docs/en/dxl/x/xl320/#id). 
     ```bash
-    sudo python3 change_servo_id.py
+    python3 change_servo_id.py
     ```
-3. We have 2 examples `tests/rotate_full_range.py` and `tests/rotate_in_circle.py`. You need to define the servo ID to use the 2 examples, and the IDs are the ones you obtain from step 1.
-    ```python3
-    # defines the servo's ID
-    servo1_ID = 1
-    servo2_ID = 2
-    ```
+3. We have 2 examples `tests/position_control.py` and `tests/velocity_control.py`. You need to define the servo ID to use the 2 examples, and the ID is the one you obtain from step 1.
     ```bash
-    sudo python3 rotate_in_circle.py
+    python3 velocity_control.py
     ```
 ## Uninstall
 ```bash
