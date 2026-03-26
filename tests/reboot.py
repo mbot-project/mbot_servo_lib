@@ -1,8 +1,3 @@
-"""
-Used to check the servo ID.
-Loop thru all possible IDs and ping each one.
-"""
-
 from dynamixel_sdk import *
 from mbot_servo_library import initialize_GPIO, close_GPIO, GPIOPacketHandler
 from mbot_servo_library.xseries_wrapper import BAUDRATE
