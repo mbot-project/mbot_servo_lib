@@ -13,6 +13,7 @@ ADDR_HARDWARE_ERROR_STATUS  = 70
 ADDR_GOAL_VELOCITY          = 104   # 4 bytes, signed; used in velocity (wheel) mode
 ADDR_PROFILE_VELOCITY       = 112   # 4 bytes; speed used in position (joint) mode
 ADDR_GOAL_POSITION          = 116   # 4 bytes
+ADDR_VELOCITY_LIMIT         = 44    # 4 bytes; caps Goal Velocity and Profile Velocity
 ADDR_MOVING                 = 122
 ADDR_PRESENT_POSITION       = 132   # 4 bytes
 
@@ -39,6 +40,9 @@ class Servo:
         self.servo_id      = servo_id
         self.portHandler   = portHandler
         self.packetHandler = packetHandler
+        vel_limit, result, error = self.packetHandler.read4ByteTxRx(
+            self.portHandler, self.servo_id, ADDR_VELOCITY_LIMIT)
+        self.vel_limit = vel_limit if result == COMM_SUCCESS else 200
 
     # ── LED ──────────────────────────────────────────────────────────────────
 
@@ -183,7 +187,7 @@ class Servo:
         load = int(load)
         if not 0 <= load <= 100:
             raise ValueError("Load must be in [0, 100]")
-        speed = int(load / 100.0 * 1023)          # positive → CCW
+        speed = int(load / 100.0 * self.vel_limit)  # positive → CCW
         result, error = self.packetHandler.write4ByteTxRx(
             self.portHandler, self.servo_id, ADDR_GOAL_VELOCITY, speed)
         if self._check(result, error):
@@ -200,7 +204,7 @@ class Servo:
         load = int(load)
         if not 0 <= load <= 100:
             raise ValueError("Load must be in [0, 100]")
-        speed = -int(load / 100.0 * 1023)         # negative → CW
+        speed = -int(load / 100.0 * self.vel_limit) # negative → CW
         result, error = self.packetHandler.write4ByteTxRx(
             self.portHandler, self.servo_id, ADDR_GOAL_VELOCITY, speed)
         if self._check(result, error):
