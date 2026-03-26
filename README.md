@@ -57,9 +57,9 @@ from mbot_servo_library.xseries_wrapper import BAUDRATE, Servo
     ```bash
     python3 change_servo_id.py
     ```
-3. We have 2 examples `tests/rotate_full_range_single.py` and `tests/rotate_in_circle_single.py`. You need to define the servo ID to use the 2 examples, and the IDs are the ones you obtain from step 1.
+3. We have 2 examples `tests/position_control.py` and `tests/velocity_control.py`. You need to define the servo ID to use the 2 examples, and the ID is the one you obtain from step 1.
     ```bash
-    python3 rotate_in_circle_single.py
+    python3 velocity_control.py
     ```
 ## Uninstall
 ```bash

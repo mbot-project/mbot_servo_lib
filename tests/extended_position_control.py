@@ -1,14 +1,3 @@
-
-"""
-Servo movement example in "wheel" mode
-
-This script demonstrates the use of the mbot_servo_library to control servo motors
-operating in wheel mode. The servo rotates continuously with a user-defined speed until 
-a stop command is issued.
-
-Use: python3 rotate_in_circle.py
-"""
-
 import time, os
 from mbot_servo_library import initialize_GPIO, close_GPIO, GPIOPacketHandler
 # from mbot_servo_library.xl320_wrapper import *
@@ -20,7 +9,8 @@ servo_ID = 1
 def getch():
     """
     Gets a single character from standard input.
-
+    This function blocks the program, waits until the user presses a key
+    
     @return: The character pressed by the user.
     """
     if os.name == "nt":
@@ -47,34 +37,37 @@ def main():
     portHandler.openPort()
     portHandler.setBaudRate(BAUDRATE)
     time.sleep(1)
-    
+
     # Initialize a Servo instance
     servo = Servo(servo_ID, portHandler, packetHandler)
     servo.led_switch(LED_ON)
     servo.disable_torque()
-    servo.set_control_mode("wheel")  # torque must be off when you change mode
+    servo.set_control_mode("extended_position")  # torque must be off when you change mode
     servo.enable_torque()
 
-    print("Press any key to continue! (or press ESC to quit!)")
-    if getch() == chr(0x1B):
-        quit()
+    servo.set_pos_ctl_speed(100)  # range [0, 500] 0 is max
 
-    servo.set_wheel_cw_speed(20)  # value is in percentage
+    # exteded position control can go over 360 degrees up to 256 rev
+    goal_positions = [-1000, 1000, 4090, 6000, 8000, 10000]   # range -1,048,576 to 1,048,576
 
-    try:
-        print("Press ESC to stop the servo.")
-        while True:  # Start a loop that will run until ESC is pressed
-            if getch() == chr(0x1B):
-                servo.set_wheel_cw_speed(0)  # Stop the servo by setting speed to 0
+    for goal_position in goal_positions:
+        print("Press any key to continue! (or press ESC to quit!)")
+        if getch() == chr(0x1B):
+            portHandler.closePort()
+            quit()
+        servo.set_position(goal_position)
+        while 1:
+            time.sleep(0.1)
+            servo_current_position = servo.get_position()
+            if servo_current_position:
+                print("[ID:%d] GoalPos:%d  CurrentPos:%d" % (servo_ID, goal_position, servo_current_position))
+                if abs(goal_position - servo_current_position) <= 20:
+                    break
+            else:
                 break
 
-    except KeyboardInterrupt:
-        servo.set_wheel_cw_speed(0)
-
-    finally:
-        servo.disable_torque()
-        portHandler.closePort()
-        close_GPIO()
+    portHandler.closePort()
+    close_GPIO()
 
 if __name__ == "__main__":
     main()

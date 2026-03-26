@@ -1,12 +1,3 @@
-"""
-Servo movement example in "joint" mode (single motor)
-
-This script demonstrates the use of the mbot_servo_library to control a servo motor.
-The servo is set to operate in "joint" mode, where it alternates between two goal positions we set.
-
-Use: python3 rotate_full_range_single.py
-"""
-
 import time, os
 from mbot_servo_library import initialize_GPIO, close_GPIO, GPIOPacketHandler
 # from mbot_servo_library.xl320_wrapper import *
@@ -18,7 +9,8 @@ servo_ID = 1
 def getch():
     """
     Gets a single character from standard input.
-
+    This function blocks the program, waits until the user presses a key
+    
     @return: The character pressed by the user.
     """
     if os.name == "nt":
@@ -50,16 +42,16 @@ def main():
     servo = Servo(servo_ID, portHandler, packetHandler)
     servo.led_switch(LED_ON)
     servo.disable_torque()
-    servo.set_control_mode("joint")  # torque must be off when you change mode
+    servo.set_control_mode("position")  # torque must be off when you change mode
     servo.enable_torque()
 
-    servo.set_joint_speed(200)  # range(0,1023)
-    goal_positions = [40,1000]   # range(0,1023)
+    servo.set_pos_ctl_speed(200)  # range [0, 32737], 0 is max
+    goal_positions = [10, 4090, 10]   # range [0, 4095]
 
     for goal_position in goal_positions:
         print("Press any key to continue! (or press ESC to quit!)")
         if getch() == chr(0x1B):
-            close_port(portHandler)
+            portHandler.closePort()
             quit()
         servo.set_position(goal_position)
         while 1:

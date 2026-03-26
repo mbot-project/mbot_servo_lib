@@ -15,9 +15,6 @@ ADDR_PRESENT_POSITION       = 37
 ADDR_MOVING                 = 49
 ADDR_HARDWARE_ERROR_STATUS  = 50
 
-DXL_MINIMUM_POSITION_VALUE  = 0         # Refer to the CW Angle Limit of product eManual
-DXL_MAXIMUM_POSITION_VALUE  = 1023      # Refer to the CCW Angle Limit of product eManual
-
 TORQUE_ENABLE               = 1
 TORQUE_DISABLE              = 0
 WHEEL_MODE                  = 1
