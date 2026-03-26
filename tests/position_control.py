@@ -45,7 +45,7 @@ def main():
     servo.set_control_mode("position")  # torque must be off when you change mode
     servo.enable_torque()
 
-    servo.set_pos_ctl_speed(200)  # range [0, 32737], 0 is max
+    servo.set_pos_ctl_speed(300)  # XL330 range [1, 500], XL430 range[0, 32737], 0 is max speed
     goal_positions = [10, 4090, 10]   # range [0, 4095]
 
     for goal_position in goal_positions:

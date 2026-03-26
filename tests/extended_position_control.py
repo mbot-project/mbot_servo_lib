@@ -45,7 +45,7 @@ def main():
     servo.set_control_mode("extended_position")  # torque must be off when you change mode
     servo.enable_torque()
 
-    servo.set_pos_ctl_speed(100)  # range [0, 500] 0 is max
+    servo.set_pos_ctl_speed(200)  # XL330 range [1, 500], XL430 range[0, 32737], 0 is max speed
 
     # exteded position control can go over 360 degrees up to 256 rev
     goal_positions = [-1000, 1000, 4090, 6000, 8000, 10000]   # range -1,048,576 to 1,048,576

@@ -156,15 +156,17 @@ class Servo:
 
         @param speed  Integer in [0, 32737]. 0 = maximum speed.
                       Unit: 0.229 rpm per count.
+
+        @note for XL330, if speed higher than 500, it might trigger time-out
         """
         speed = int(speed)
-        if not 0 <= speed <= 500:
-            raise ValueError("Speed must < 500 or might trigger time-out error")
+        if not (0 <= speed <= 500):
+            print("[Warning] If you are using XL330, speed > 500 might trigger hardware error.")
         result, error = self.packetHandler.write4ByteTxRx(
             self.portHandler, self.servo_id, ADDR_PROFILE_VELOCITY, speed)
         if self._check(result, error):
             if speed == 0:
-                print(f"[ID:{self.servo_id}] Speed set to maximum, might trigger time-out error.")
+                print(f"[ID:{self.servo_id}] Speed set to maximum.")
             else:
                 print(f"[ID:{self.servo_id}] Speed set to {speed} ({0.229 * speed:.2f} rpm)")
 
